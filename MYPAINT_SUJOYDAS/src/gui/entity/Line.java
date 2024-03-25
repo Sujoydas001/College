@@ -39,159 +39,38 @@ public class Line implements DisplayObject , MouseListener,MouseMotionListener{
 			if ( y2  < y1 ) {
 				if ( x2 < x1 ) {
 //					System.out.println(3);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k < (dy) ) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, --y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(--x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,-1,-1,-1);
 				}else {
 //					System.out.println(2);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k < (dy) ) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, --y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(++x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,-1,+1,-1);
 				}
 			}else {
 				if ( x2 < x1 ) {
 //					System.out.println(6);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k < (dy )) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, ++y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(--x0, ++y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,1,-1,1);
 				}else {
 //					System.out.println(7);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k <(dy) ) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, ++y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(++x0, ++y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,1,1,1);
 				}
 			}
 		}else {
 			if ( y2  < y1 ) {
 				if ( x2 < x1 ) {
 //					System.out.println(4);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(--x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(--x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dx, dy, x0, y0, -1,0,-1,-1);
 					
 				}else {
 //					System.out.println(1);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(++x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(++x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
-					
+					startDraw(g, dx, dy, x0, y0, +1,0,+1,-1);	
 				}
 			}else {
 				if ( x2 < x1 ) {
 //					System.out.println(5);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(--x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(--x0, ++y0, 1,1);
-								
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dx, dy, x0, y0, -1,0,-1,1);
 				}else {
 //					System.out.println(8);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(++x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(++x0, ++y0, 1,1);
-							
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
-					
+					startDraw(g, dx, dy, x0, y0, +1,0,+1,+1);
+//					
 				}
 			}
 		}
@@ -204,7 +83,24 @@ public class Line implements DisplayObject , MouseListener,MouseMotionListener{
 		
 		return;
 	}
-	
+	private void startDraw(Graphics g , int gDiff,int lDiff,int x0, int y0,int p,int q , int r , int s) {
+		int pk = ( 2 * (lDiff) - (gDiff)) ;
+		int k = 0 ;
+		while(k < (gDiff) ) {
+			if ( pk < 0  ) {
+				g.drawOval(x0+p, y0+q, 1,1);
+				x0 += p ; y0 += q ; 
+				pk = pk + ( 2* lDiff);  
+			}else {
+				g.drawOval(x0+r, y0+s, 1,1);
+				x0 += r ; y0 += s ; 
+				pk = pk + ( 2* lDiff) - ( 2 * gDiff)  ;  
+				
+			}
+			
+			k++ ;
+		}
+	}
 	
 	
 	@Override
