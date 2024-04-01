@@ -72,7 +72,7 @@ public class MyGUI extends JFrame implements ActionListener, ItemListener {
 	JPanel drawPanel ;
 	public MyGUI() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(1000,1000);
+		setSize(600,600);
 		setTitle("My GUI");
 		
 		initComponents();
