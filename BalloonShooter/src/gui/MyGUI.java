@@ -7,17 +7,28 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
 /**
@@ -129,17 +140,17 @@ public class MyGUI extends JFrame implements ActionListener , ComponentListener 
 	}
 	@Override
 	public void componentMoved(ComponentEvent e) {
-
+		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void componentShown(ComponentEvent e) {
-
+		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void componentHidden(ComponentEvent e) {
-
+		// TODO Auto-generated method stub
 		
 	}
 	

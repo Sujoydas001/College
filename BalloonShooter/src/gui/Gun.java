@@ -118,14 +118,14 @@ public class Gun extends Thread implements DisplayObject , KeyListener , MouseWh
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
-
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
 			}else {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
-
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -263,7 +263,7 @@ public class Gun extends Thread implements DisplayObject , KeyListener , MouseWh
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
-
+		// TODO Auto-generated method stub
 		
 	}
 	@Override
