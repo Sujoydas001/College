@@ -53,14 +53,14 @@ public class Bullet extends Thread implements DisplayObject {
 					try {
 						Thread.sleep(1);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}else {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}

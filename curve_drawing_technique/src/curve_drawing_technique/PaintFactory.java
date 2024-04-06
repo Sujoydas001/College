@@ -1,9 +1,7 @@
 package curve_drawing_technique;
 
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.CubicCurve2D;
 
 /*
  * sujoy das

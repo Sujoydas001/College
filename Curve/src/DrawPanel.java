@@ -2,13 +2,10 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+
 import java.util.ArrayList;
-import java.util.List;
+
 import javax.swing.JPanel;
 
 public class DrawPanel extends JPanel{
@@ -18,14 +15,16 @@ public class DrawPanel extends JPanel{
 	public DrawPanel() {
 		setBackground(Color.WHITE);
 		setRunnableComponents();
-		addMouseListener((MouseListener) this.cObj);
+		
+		
 //		addMouseListener(this);
 		
 	}
 
 	public void setRunnableComponents() {
 		displayBuffer = new ArrayList<DisplayObject>();
-		cObj= new BCurve(displayBuffer);
+		addObj();
+		
 	}
 
 	@Override
@@ -38,15 +37,20 @@ public class DrawPanel extends JPanel{
 		
 		
 	}
+	public void addObj() {
+		removeMouseListener((MouseListener) this.cObj);
+		cObj = new BCurve(displayBuffer); 
+		addMouseListener((MouseListener) this.cObj);
+		displayBuffer.add(cObj);
+		
+	}
 	public void draw() {
 		
-		displayBuffer.add(cObj);
-//		System.out.println("daraw3");
+		((BCurve)cObj).state = "done" ; 
+		addObj();
 	}
 	public void remove() {
-//		displayBuffer.remove(cObj);
-		((BCurve)cObj).removePoints() ; 
-
+		displayBuffer.removeAll(displayBuffer);
 	}
 
 

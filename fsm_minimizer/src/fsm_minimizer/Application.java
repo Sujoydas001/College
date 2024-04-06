@@ -122,7 +122,7 @@ public class Application {
 			System.out.println("________________________________");
 			System.out.println("/*OUTPUT SECTION*/");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

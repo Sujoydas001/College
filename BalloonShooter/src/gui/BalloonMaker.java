@@ -22,14 +22,14 @@ public class BalloonMaker extends Thread {
 			try {
 				Thread.sleep(random.nextInt(900,1200));
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			}else {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}

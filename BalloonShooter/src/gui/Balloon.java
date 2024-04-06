@@ -39,14 +39,13 @@ public class Balloon extends Thread implements DisplayObject{
 			try {
 				Thread.sleep(random);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
 			}
 			}else {
 				try {
 					Thread.sleep(40);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
