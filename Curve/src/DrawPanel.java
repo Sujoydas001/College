@@ -51,6 +51,7 @@ public class DrawPanel extends JPanel{
 	}
 	public void remove() {
 		displayBuffer.removeAll(displayBuffer);
+		addObj() ;
 	}
 
 

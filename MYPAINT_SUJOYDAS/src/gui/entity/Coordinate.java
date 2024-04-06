@@ -9,13 +9,16 @@ import java.awt.Graphics;
  * 
  * */
 public class Coordinate implements DisplayObject {
-	public int x,y;
+	public int x,y,size;
 	public Coordinate(int x,int y) {
-		this.x = x; this.y = y; 
+		this.x = x; this.y = y; size = 1 ; 
+	}
+	public Coordinate(int x,int y,int size) {
+		this.x = x; this.y = y; this.size = size  ; 
 	}
 	@Override
 	public void draw(Graphics g) {
-		g.drawOval(x, y, 1, 1);
+		g.drawOval(x, y, size,size);
 		
 	}
 }

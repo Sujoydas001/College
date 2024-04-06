@@ -6,5 +6,5 @@ package gui;
  * @Author Sujoy das
  */
 public enum SelectedTool {
-	Circle,Line,FreeHand,None;
+	Circle,Line,FreeHand,BeizerCurve,ColorFill,None;
 }

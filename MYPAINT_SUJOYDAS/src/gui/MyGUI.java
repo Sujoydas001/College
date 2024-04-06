@@ -49,6 +49,7 @@ import java.awt.event.ItemListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -67,9 +68,8 @@ import javax.swing.Timer;
 public class MyGUI extends JFrame implements ActionListener, ItemListener {
 	
 	JComboBox<String> techniques = null;
-	
-	DisplayManager displayManager ; 
 	JPanel drawPanel ;
+	private JButton colorBtn;
 	public MyGUI() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600,600);
@@ -80,15 +80,18 @@ public class MyGUI extends JFrame implements ActionListener, ItemListener {
 
 	private void initComponents() {
 		JPanel topPanel = new JPanel();
-		String list[] = {"Circle","Line","Free Hand"};
+		String list[] = {"Select Tool","Circle","Line","Free Hand","Curve"};
 		techniques = new JComboBox<String>(list);
 		techniques.setSelectedIndex(0);
 		techniques.addItemListener(this);
+		colorBtn = new JButton("fill");
+		topPanel.add(colorBtn) ; 
+		colorBtn.addActionListener(this); 
 		topPanel.add(new JLabel("Technique:"));
 		topPanel.add(techniques);
 		
-		this.displayManager  = new DisplayManager() ; 
-		drawPanel = new DrawPanel(this.displayManager);
+		
+		drawPanel = new DrawPanel();
 		drawPanel.setBackground(Color.WHITE);
 		add(drawPanel);
 		add(topPanel,BorderLayout.NORTH);
@@ -106,6 +109,14 @@ public class MyGUI extends JFrame implements ActionListener, ItemListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if ( e.getSource().equals(colorBtn)) {
+			SelectedTool sTool = SelectedTool.ColorFill ; 
+	         addNewObj(sTool) ; 
+			 
+			
+		}
+		
+		
 		repaint();
 	}
 
@@ -113,21 +124,32 @@ public class MyGUI extends JFrame implements ActionListener, ItemListener {
 	@Override
 	public void itemStateChanged(ItemEvent e) { 
 		 if (e.getStateChange() == ItemEvent.SELECTED) {
-	          
-	         if ( e.getItem().toString().equals("Circle") ) {
-	        	 this.displayManager.toolSelected = SelectedTool.Circle;
+			 SelectedTool sTool = null ; 
+			 if ( e.getItem().toString().equals("Select Tool") ) {
+				 sTool = SelectedTool.None ;	     		
+	         }else if ( e.getItem().toString().equals("Circle") ) {
+	        	 sTool = SelectedTool.Circle;
 	     		
 	         }else if ( e.getItem().toString().equals("Line") ) {
-	        	 this.displayManager.toolSelected = SelectedTool.Line;
+	        	 sTool = SelectedTool.Line;
 	     		
 	         }else if ( e.getItem().toString().equals("Free Hand") ) {
-	        	 this.displayManager.toolSelected = SelectedTool.FreeHand;
+	        	 sTool = SelectedTool.FreeHand;
+	     		
+	         }else if ( e.getItem().toString().equals("Curve") ) {
+	        	 sTool = SelectedTool.BeizerCurve;
 	     		
 	         }else {
 	        	 
 	         }
+	         addNewObj(sTool) ; 
 	         
 		 }
+	}
+
+	private void addNewObj(SelectedTool sTool) {
+		((DrawPanel)drawPanel).addNewObj(sTool) ; 
+		
 	}
 
 

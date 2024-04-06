@@ -1,13 +1,16 @@
 package gui.entity;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import gui.DisplayManager;
+import gui.DrawPanel;
+import gui.SelectedTool;
 
 
 /*
@@ -16,16 +19,12 @@ import gui.DisplayManager;
 
 public class Line implements DisplayObject , MouseListener,MouseMotionListener{
 	public int x1,x2,y1,y2;
-	DisplayManager displayManager = null;
+	
 	private List<DisplayObject> displayBuffer = null;
-	public Line(int x1, int y1, DisplayManager displayManager) {
-		super();
-		this.x1 = x1;
-		this.x2 = x1;
-		this.y2 = y1;
-		this.y1 = y1;
-		this.displayManager = displayManager;
-		this.displayBuffer = displayManager.getDisplayBuffer();
+	private DrawPanel parentPanel;
+	
+	public Line(DrawPanel drawPanel) {
+		this.parentPanel = drawPanel;
 	}
 
 	
@@ -134,14 +133,17 @@ public class Line implements DisplayObject , MouseListener,MouseMotionListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		displayBuffer.add(this);
+//		displayBuffer.add(this);
+		this.x1 = e.getX();
+		this.y1 = e.getY();
+		x2 = x1 ; y2 = y1 ;
 		
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		parentPanel.addNewObj(SelectedTool.Line);
 		
 	}
 

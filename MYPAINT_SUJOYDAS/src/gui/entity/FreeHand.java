@@ -1,5 +1,6 @@
 package gui.entity;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -7,7 +8,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import gui.DisplayManager;
+import gui.DrawPanel;
+import gui.SelectedTool;
 
 
 
@@ -18,17 +20,11 @@ import gui.DisplayManager;
  * */
 public class FreeHand implements DisplayObject , MouseListener , MouseMotionListener{
 	
-	public int x,y;
-	private DisplayManager displayManager = null;
+
 	private ArrayList<Coordinate> coordinates = null;
-	
-	
-	
-	public FreeHand(int x, int y, DisplayManager displayManager) {
-		this.x = x;
-		this.y = y;
-		
-		this.displayManager = displayManager ; 
+	private DrawPanel parentPanel ; 
+	public FreeHand(DrawPanel drawPanel) {
+		this.parentPanel = drawPanel ; 
 		coordinates = new ArrayList<>();
 		
 	}
@@ -37,8 +33,10 @@ public class FreeHand implements DisplayObject , MouseListener , MouseMotionList
 
 	@Override
 	public void draw(Graphics g) {
+		
 		for (Coordinate each: coordinates ) {
-			g.drawOval(each.x,each.y,1,1);
+//			g.drawOval(each.x,each.y,1,1);
+			each.draw(g);
 		}
 		for ( int i = 0 ; i < coordinates.size()- 1; i++ ) {
 			drawBresenham(g, coordinates.get(i).x, coordinates.get(i).y, coordinates.get(i+1).x,coordinates.get(i+1).y);
@@ -48,7 +46,7 @@ public class FreeHand implements DisplayObject , MouseListener , MouseMotionList
 	}
 	
 
-	private void drawBresenham( Graphics g , int x1,int y1,int x2, int y2) {
+		private void drawBresenham( Graphics g , int x1,int y1,int x2, int y2) {
 		int x0 = x1,y0 = y1;
 		g.drawOval(x0, y0, 1,1);
 		int dx =Math.abs( x2-x0 );
@@ -58,159 +56,38 @@ public class FreeHand implements DisplayObject , MouseListener , MouseMotionList
 			if ( y2  < y1 ) {
 				if ( x2 < x1 ) {
 //					System.out.println(3);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k < (dy) ) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, --y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(--x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,-1,-1,-1);
 				}else {
 //					System.out.println(2);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k < (dy) ) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, --y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(++x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,-1,+1,-1);
 				}
 			}else {
 				if ( x2 < x1 ) {
 //					System.out.println(6);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k < (dy )) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, ++y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(--x0, ++y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,1,-1,1);
 				}else {
 //					System.out.println(7);
-					int pk = ( 2 * (dx) - (dy)) ;
-					int k = 0 ;
-					while(k <(dy) ) {
-						if ( pk < 0  ) {
-							g.drawOval(x0, ++y0, 1,1);
-							
-							pk = pk + ( 2* dx);  
-						}else {
-							g.drawOval(++x0, ++y0, 1,1);
-								
-							pk = pk + ( 2* dx) - ( 2 * dy)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dy, dx, x0, y0, 0,1,1,1);
 				}
 			}
 		}else {
 			if ( y2  < y1 ) {
 				if ( x2 < x1 ) {
 //					System.out.println(4);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(--x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(--x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dx, dy, x0, y0, -1,0,-1,-1);
 					
 				}else {
 //					System.out.println(1);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(++x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(++x0, --y0, 1,1);
-								
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
-					
+					startDraw(g, dx, dy, x0, y0, +1,0,+1,-1);	
 				}
 			}else {
 				if ( x2 < x1 ) {
 //					System.out.println(5);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(--x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(--x0, ++y0, 1,1);
-								
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
+					startDraw(g, dx, dy, x0, y0, -1,0,-1,1);
 				}else {
 //					System.out.println(8);
-					int pk = ( 2 * (dy) - (dx)) ;
-					int k = 0 ;
-					while(k < (dx) ) {
-						if ( pk < 0  ) {
-							g.drawOval(++x0, y0, 1,1);
-							
-							pk = pk + ( 2* dy);  
-						}else {
-							g.drawOval(++x0, ++y0, 1,1);
-							
-							pk = pk + ( 2* dy) - ( 2 * dx)  ;  
-							
-						}
-						
-						k++ ;
-					}
-					
+					startDraw(g, dx, dy, x0, y0, +1,0,+1,+1);
+//					
 				}
 			}
 		}
@@ -222,6 +99,24 @@ public class FreeHand implements DisplayObject , MouseListener , MouseMotionList
 		
 		
 		return;
+	}
+	private void startDraw(Graphics g , int gDiff,int lDiff,int x0, int y0,int p,int q , int r , int s) {
+		int pk = ( 2 * (lDiff) - (gDiff)) ;
+		int k = 0 ;
+		while(k < (gDiff) ) {
+			if ( pk < 0  ) {
+				g.drawOval(x0+p, y0+q, 1,1);
+				x0 += p ; y0 += q ; 
+				pk = pk + ( 2* lDiff);  
+			}else {
+				g.drawOval(x0+r, y0+s, 1,1);
+				x0 += r ; y0 += s ; 
+				pk = pk + ( 2* lDiff) - ( 2 * gDiff)  ;  
+				
+			}
+			
+			k++ ;
+		}
 	}
 	
 	
@@ -235,15 +130,15 @@ public class FreeHand implements DisplayObject , MouseListener , MouseMotionList
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		coordinates.add(new Coordinate(x,y));
-		displayManager.getDisplayBuffer().add(this);
+		coordinates.add(new Coordinate(e.getX(),e.getY()));
+//		displayManager.getDisplayBuffer().add(this);
 		
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		parentPanel.addNewObj(SelectedTool.FreeHand);
 		
 	}
 
@@ -264,9 +159,7 @@ public class FreeHand implements DisplayObject , MouseListener , MouseMotionList
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		x = e.getX() ; 
-		y = e.getY();
-		coordinates.add(new Coordinate(x,y));
+		coordinates.add(new Coordinate(e.getX(),e.getY()));
 		
 	}
 

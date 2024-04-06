@@ -1,72 +1,43 @@
+package gui.entity;
 import java.awt.Graphics;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import gui.DrawPanel;
+import gui.SelectedTool;
 
-public class BCurve implements DisplayObject ,MouseListener{
+
+public class BCurve implements DisplayObject ,MouseListener,MouseMotionListener{
 	
 	ArrayList<DisplayObject> framingPoints ; 
 	ArrayList<DisplayObject> points ; 
-	ArrayList<DisplayObject> displayBuffer ; 
+//	ArrayList<DisplayObject> displayBuffer ; 
+	private DrawPanel parentPanel;
 	String state ; 
 	public BCurve(ArrayList<DisplayObject> displayBuffer) {
 		framingPoints = new ArrayList<DisplayObject>(); 
 		points = new ArrayList<DisplayObject>(); 
-		this.displayBuffer = displayBuffer ; 
+//		this.displayBuffer = displayBuffer ; 
 		state = "idle" ;  /*idle / draw / done */
+	}
+	public BCurve(DrawPanel drawPanel) {
+		framingPoints = new ArrayList<DisplayObject>(); 
+		points = new ArrayList<DisplayObject>(); 
+//		this.displayBuffer = displayBuffer ; 
+		state = "idle" ;  /*idle / draw / done */
+		this.parentPanel = drawPanel ; 
 	}
 
 
-	public void addPoints(int x , int y ) {
+	private void addPoints(int x , int y ) {
 		
-		Coordinate point = new Coordinate(x, y, 10) ; 
+		Coordinate point = new Coordinate(x, y,5) ; 
 		framingPoints.add( point) ;
 		state = "draw" ; 
 	}
-//	@Override
-//	public void draw(Graphics g) {
-//		
-//		for (int i =  0 ; i< framingPoints.size() ;i++) {
-//			framingPoints.get(i).draw(g);
-//		};  
-//		for (int i =  0 ; i< framingPoints.size() -1  ;i++) {
-//			Coordinate c1 =  (Coordinate)(framingPoints.get(i)) ;
-//			Coordinate c2 =  (Coordinate)(framingPoints.get(i+1)) ;
-//			g.drawLine(c1.x, c1.y, c2.x, c2.y);
-//		};  
-//		
-//		
-//		for (int i =  0 ; i< points.size() ;i++) {
-//			points.get(i).draw(g);
-//		};  
-//		for (int i =  0 ; i< points.size() -1  ;i++) {
-//			Coordinate c1 =  (Coordinate)(points.get(i)) ;
-//			Coordinate c2 =  (Coordinate)(points.get(i+1)) ;
-//			g.drawLine(c1.x, c1.y, c2.x, c2.y);
-//		};  
-//		
-//		midB(framingPoints,1) ;
-//		
-//	}
-//	private void midB(ArrayList<DisplayObject> initial,int count) {
-//		if ( count == 0 ) {
-//			return ;
-//		}
-//		for (int i =  0 ; i< initial.size() -1  ;i++) {
-//			Coordinate c1 =  (Coordinate)(initial.get(i)) ;
-//			Coordinate c2 =  (Coordinate)(initial.get(i+1)) ;
-//			DisplayObject midpoint  = new Coordinate((int)((c1.x+c2.x)/2),(int)((c1.y+c2.y)/2),5 );
-//			points.add( midpoint);
-//			
-////			midB(points, count-1); 
-//		};  
-//		
-//		
-//	}
-	
 	private double[][] b(double[][] position, float t) {
 		
 		if ( position.length == 1 ) {
@@ -106,7 +77,7 @@ public class BCurve implements DisplayObject ,MouseListener{
 		while( t <= 1 ) {
 			 
 			double[][] coordinate =  b(temp, t);
-			points.add( new Coordinate((int)coordinate[0][0], (int)coordinate[0][1], 2) );
+			points.add( new Coordinate((int)coordinate[0][0], (int)coordinate[0][1], 1) );
 			t+= step;
 		}
 		state = "idle" ;
@@ -120,20 +91,21 @@ public class BCurve implements DisplayObject ,MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-//		displayBuffer.add(this) ; 
-		if (state.equals("idle") ) {
-			points.removeAll(points) ; 
-			addPoints(e.getX(), e.getY()) ; 
-			 
+		if ( e.getClickCount() == 2 ) {
+			framingPoints.removeAll(framingPoints)  ;
+			parentPanel.addNewObj(SelectedTool.BeizerCurve);
 		}
-		
-		
-		
+		if ( e.getClickCount() == 1 ) {
+			if (state.equals("idle") ) {
+				points.removeAll(points) ; 
+				addPoints(e.getX(), e.getY()) ; 
+				 
+			}
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
 		
 	}
 
@@ -146,6 +118,16 @@ public class BCurve implements DisplayObject ,MouseListener{
 	@Override
 	public void mouseExited(MouseEvent e) {
 
+		
+	}
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
