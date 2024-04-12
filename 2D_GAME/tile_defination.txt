@@ -1,0 +1,6 @@
+4
+tileid,color,bordercolor
+0,black,black
+1,black,red
+2,red,black
+3,red,red

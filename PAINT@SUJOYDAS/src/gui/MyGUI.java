@@ -79,6 +79,7 @@ public class MyGUI extends JFrame implements ActionListener, ItemListener {
 	}
 
 	private void initComponents() {
+		
 		JPanel topPanel = new JPanel();
 		String list[] = {"Select Tool","Circle","Line","Free Hand","Curve"};
 		techniques = new JComboBox<String>(list);
