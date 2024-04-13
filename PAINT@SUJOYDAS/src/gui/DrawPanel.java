@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -15,10 +16,12 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import gui.entity.BCurve;
+import gui.entity.BackGround;
 import gui.entity.Circle;
 import gui.entity.DisplayObject;
 import gui.entity.FreeHand;
 import gui.entity.Line;
+import gui.entity.MyRectangle;
 import gui.entity.Painter;
 //import gui.mousehandler.MyMouseListener;
 
@@ -29,14 +32,17 @@ import gui.entity.Painter;
 public class DrawPanel extends JPanel {
 	
 	
-	private List<DisplayObject> displayBuffer = null;
+	public List<DisplayObject> displayBuffer = null;
 	DisplayObject cObj=null;
 	BufferedImage image ;
+	BackGround backGround=null;
 
 	public DrawPanel() {
 		
 		this.displayBuffer= new ArrayList<DisplayObject>(); 
 		setBackground(Color.WHITE);
+		backGround = new BackGround();
+		displayBuffer.add(backGround) ; 
 
 	}
 
@@ -80,6 +86,12 @@ public class DrawPanel extends JPanel {
 			break ;
 			
 		}
+		case  Rectangle : {
+			cObj = new MyRectangle(this) ;
+			
+			break ;
+			
+		}
 		case  ColorFill : {
 			cObj = new Painter(this) ;
 			
@@ -93,6 +105,16 @@ public class DrawPanel extends JPanel {
 		addMouseMotionListener((MouseMotionListener) cObj);
 		
 		displayBuffer.add( cObj) ; 
+		
+	}
+
+
+	public void loadBG(String abspath) {
+		backGround.loadSource(abspath);
+		
+	}
+	public void removeBG() {
+		backGround.removeSource();
 		
 	}
 	
