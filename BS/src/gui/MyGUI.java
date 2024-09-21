@@ -95,7 +95,7 @@ public class MyGUI extends JFrame implements ActionListener , ComponentListener 
 		bulletCountLabel.setText("bullets remaining : "+String.valueOf(Helper.bulletCount));
 		if ( Helper.gameOver ) {
 			int reply= JOptionPane.showConfirmDialog(drawPanel, "score : " + Helper.score  + " play again?");
-			if ( reply == JOptionPane.YES_OPTION ) {
+			if ( reply == JOptionPane.YES_OPTION) {
 
 				Helper.gameOver = false;
 				Helper.gamePaused  =false;
